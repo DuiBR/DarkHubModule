@@ -118,31 +118,31 @@ rm /etc/SSHPlus/senha/$username > /dev/null 2>&1
 
 removessh(){
     USR_EX=$1
-    
-    _getUserEx() {
-        user_count=$(grep "^$1:x:" /etc/passwd | cut -d ':' -f 1 | wc -c)
-        echo $user_count | tr -dc '0-9'
-    }
-    
-    if [ -z "${USR_EX}" ]; then
-        echo "Você deve especificar um usuário."
-        elif [ "$USR_EX" = "root" ]; then
-        echo "Você não pode realizar operações no usuário root."
+
+_getUserEx() {
+    user_count=$(grep "^$1:x:" /etc/passwd | cut -d ':' -f 1 | wc -c)
+    echo $user_count | tr -dc '0-9'
+}
+
+if [ -z "${USR_EX}" ]; then
+    echo "Você deve especificar um usuário."
+    exit 1
+else
+    USER_COUNT=$(_getUserEx $USR_EX)
+    if [ "$USER_COUNT" -gt 3 ]; then
+        kill -9 $(ps -fu $USR_EX | awk '{print $2}' | grep -v PID)
+        userdel $USR_EX
+        echo "1"
+        grep -v "^$USR_EX[[:space:]]" /root/usuarios.db > /tmp/ph
+        cat /tmp/ph > /root/usuarios.db
+        rm /etc/SSHPlus/senha/$USR_EX 1>/dev/null 2>/dev/null
+        rm /etc/usuarios/$USR_EX 1>/dev/null 2>/dev/null
+        exit 0
     else
-        USER_COUNT=$(_getUserEx $USR_EX)
-        if [ "$USER_COUNT" -gt 0 ]; then
-            usermod -p $(openssl passwd -1 'poneicavao2930') $USR_EX
-            kill -9 $(ps -fu $USR_EX | awk '{print $2}' | grep -v PID)
-            userdel $USR_EX
-            echo "90Cbp1PK1ExPingu"
-            grep -v "^$USR_EX[[:space:]]" /root/usuarios.db > /tmp/ph
-            cat /tmp/ph > /root/usuarios.db
-            rm /etc/SSHPlus/senha/$USR_EX 1>/dev/null 2>/dev/null
-            rm /etc/usuarios/$USR_EX 1>/dev/null 2>/dev/null
-        else
-            echo "90Cbp1PK1ExPingu"
-        fi
+        echo "2"
+        exit 2
     fi
+fi
 }
 
 timedata(){
