@@ -4,7 +4,7 @@ rm -f atlasdata.sh atlascreate.sh atlasteste.sh atlasremove.sh delete.py sincron
 cake=$(uname -m)
 wget "https://raw.githubusercontent.com/DuiBR/DarkHubModule/main/${cake}" -O jq
 wget -O sshplus.sh "https://raw.githubusercontent.com/DuiBR/DarkHubModule/main/sshplus.sh"
-wget -O dragonmodule "https://raw.githubusercontent.com/DuiBR/DarkHubModule/main/sshplus.sh"
+wget -O dragonmodule "https://raw.githubusercontent.com/DuiBR/DarkHubModule/main/dragon.sh"
 wget -O delete.py "https://raw.githubusercontent.com/DuiBR/DarkHubModule/main/delete.py"
 wget -O sincronizar.py "https://raw.githubusercontent.com/DuiBR/DarkHubModule/main/sincronizar.py"
 wget -O verificador.py "https://raw.githubusercontent.com/DuiBR/DarkHubModule/main/verificador.py"
